@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday MIMI JI ❤️</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Segoe UI',sans-serif;
+    overflow-x:hidden;
+    color:white;
+    background: radial-gradient(circle at top, #2b1055, #12002c 40%, #000000 85%);
+}
+
+/* Star Background */
+.star{
+    position:fixed;
+    width:2px;
+    height:2px;
+    background:white;
+    border-radius:50%;
+    animation:twinkle 2s infinite alternate;
+}
+
+@keyframes twinkle{
+    from{opacity:0.3;}
+    to{opacity:1;}
+}
+
+/* Pages */
+.page{
+    display:none;
+    min-height:100vh;
+    padding:20px;
+    text-align:center;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+}
+
+.active{
+    display:flex;
+    animation:fadeIn 1s ease-in-out;
+}
+
+/* Luxury Gold Heading */
+h1{
+    font-size:2.8rem;
+    margin-bottom:20px;
+    background:linear-gradient(45deg,#ffd700,#fff5cc,#ffd700);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    text-shadow:0 0 20px rgba(255,215,0,0.6);
+}
+
+p{
+    font-size:1.2rem;
+    max-width:500px;
+    line-height:1.6;
+}
+
+/* Luxury Glass Buttons */
+button{
+    margin-top:25px;
+    padding:14px 30px;
+    border-radius:50px;
+    font-size:1rem;
+    cursor:pointer;
+    border:1px solid rgba(255,255,255,0.3);
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(10px);
+    color:#ffd700;
+    transition:0.4s;
+}
+
+button:hover{
+    background:linear-gradient(45deg,#ffd700,#ffcc66);
+    color:black;
+    box-shadow:0 0 25px gold;
+}
+
+/* Floating Hearts */
+.heart{
+    position:fixed;
+    bottom:-20px;
+    font-size:20px;
+    animation:floatUp 6s linear infinite;
+    opacity:0.8;
+}
+
+@keyframes floatUp{
+    0%{transform:translateY(0);opacity:0.9;}
+    100%{transform:translateY(-110vh);opacity:0;}
+}
+
+/* Sparkle Cursor */
+.sparkle{
+    position:fixed;
+    width:6px;
+    height:6px;
+    background:#ffffff;
+    border-radius:50%;
+    pointer-events:none;
+    animation:sparkleFade 1s linear forwards;
+}
+
+@keyframes sparkleFade{
+    0%{transform:scale(1);opacity:1;}
+    100%{transform:scale(0);opacity:0;}
+}
+
+/* Confetti */
+canvas{
+    position:fixed;
+    top:0;
+    left:0;
+    pointer-events:none;
+}
+
+/* Fade */
+@keyframes fadeIn{
+    from{opacity:0;transform:translateY(15px);}
+    to{opacity:1;transform:translateY(0);}
+}
+
+/* Mobile */
+@media(max-width:600px){
+    h1{font-size:2rem;}
+    p{font-size:1rem;}
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="confetti"></canvas>
+
+<!-- Page 1 -->
+<div class="page active" id="page1">
+    <h1>Happy Birthday MIMI JI ❤️</h1>
+    <p>
+        Under this beautiful starry night, I celebrate you... ✨  
+        The most special person in my world 💕
+    </p>
+    <button onclick="nextPage()">Open My Heart 💖</button>
+</div>
+
+<!-- Page 2 -->
+<div class="page" id="page2">
+    <h1>For You, MIMI JI 🌹</h1>
+    <p>
+        I hope your Birthday is as beautiful and full of love as you are. 
+        You deserve only the best, and I wish that for you. 
+        Best wishes, my love 💖
+    </p>
+    <button onclick="startConfetti()">Celebrate 🎉</button>
+</div>
+
+<!-- Page 3 (Proposal) -->
+<div class="page" id="page3">
+    <h1>My Heart Has One Question 💍</h1>
+    <p>
+        Through every star, every smile, every heartbeat...  
+        I choose you. Always.
+    </p>
+
+    <h1 style="margin-top:30px;">
+        Will you always stay with me? ❤️
+    </h1>
+
+    <button onclick="finalCelebration()">Yes, Forever 💖</button>
+</div>
+
+<!-- Hidden Secret -->
+<div id="secretMessage" style="
+display:none;
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:rgba(0,0,0,0.95);
+padding:30px;
+border-radius:20px;
+text-align:center;
+box-shadow:0 0 40px gold;
+z-index:999;">
+<h1 style="font-size:1.5rem;">You found my secret 💖</h1>
+<p style="margin-top:10px;">
+No matter what happens in life,  
+I promise to stand beside you,  
+protect you, love you, and cherish you.  
+Forever yours. 💍✨
+</p>
+<button onclick="closeSecret()">Close</button>
+</div>
+
+<script>
+
+/* Page Switch */
+function nextPage(){
+    document.getElementById("page1").classList.remove("active");
+    document.getElementById("page2").classList.add("active");
+}
+
+/* Stars */
+for(let i=0;i<120;i++){
+    const star=document.createElement("div");
+    star.classList.add("star");
+    star.style.top=Math.random()*100+"vh";
+    star.style.left=Math.random()*100+"vw";
+    star.style.animationDuration=(Math.random()*2+1)+"s";
+    document.body.appendChild(star);
+}
+
+/* Floating Hearts */
+function createHeart(){
+    const heart=document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML="💖";
+    heart.style.left=Math.random()*100+"vw";
+    heart.style.fontSize=(Math.random()*20+15)+"px";
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),6000);
+}
+setInterval(createHeart,500);
+
+/* Sparkle Cursor */
+document.addEventListener("mousemove",function(e){
+    const sparkle=document.createElement("div");
+    sparkle.classList.add("sparkle");
+    sparkle.style.left=e.pageX+"px";
+    sparkle.style.top=e.pageY+"px";
+    document.body.appendChild(sparkle);
+    setTimeout(()=>sparkle.remove(),1000);
+});
+
+/* Confetti */
+const canvas=document.getElementById("confetti");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+window.addEventListener("resize",()=>{
+    canvas.width=window.innerWidth;
+    canvas.height=window.innerHeight;
+});
+
+let confetti=[];
+let angle=0;
+let confettiAnimation;
+
+function randomColor(){
+    const colors=["#ffd700","#ffcc66","#ffffff","#ff85a1"];
+    return colors[Math.floor(Math.random()*colors.length)];
+}
+
+function createConfetti(){
+    for(let i=0;i<200;i++){
+        confetti.push({
+            x:Math.random()*canvas.width,
+            y:Math.random()*canvas.height-canvas.height,
+            r:Math.random()*6+4,
+            d:Math.random()*100,
+            color:randomColor()
+        });
+    }
+}
+
+function drawConfetti(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    angle+=0.01;
+
+    for(let i=0;i<confetti.length;i++){
+        let c=confetti[i];
+        ctx.fillStyle=c.color;
+        ctx.fillRect(c.x,c.y,c.r,c.r);
+        c.y+=Math.cos(angle+c.d)+3;
+        c.x+=Math.sin(angle);
+
+        if(c.y>canvas.height){
+            c.y=-10;
+            c.x=Math.random()*canvas.width;
+        }
+    }
+    confettiAnimation=requestAnimationFrame(drawConfetti);
+}
+
+function startConfetti(){
+    confetti=[];
+    createConfetti();
+    drawConfetti();
+
+    setTimeout(()=>{
+        cancelAnimationFrame(confettiAnimation);
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+
+        document.getElementById("page2").classList.remove("active");
+        document.getElementById("page3").classList.add("active");
+
+    },5000);
+}
+
+function finalCelebration(){
+    confetti=[];
+    createConfetti();
+    drawConfetti();
+}
+
+/* Secret Double Click */
+document.addEventListener("dblclick",function(){
+    document.getElementById("secretMessage").style.display="block";
+});
+
+function closeSecret(){
+    document.getElementById("secretMessage").style.display="none";
+}
+
+</script>
+</body>
+</html>
